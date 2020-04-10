@@ -1,0 +1,122 @@
+.Book {
+    width: 60%;
+    margin: 0px auto 10px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFEACD;
+    transition: background-color 1s;
+}
+
+.Book:hover {
+    border-radius: 15px;
+    background-color: #FFD496;
+}
+
+.Book-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 10px 10px;
+    border-radius: 15px;
+}
+
+.Book-container img {
+    align-self: center;
+    margin-right: 0.5em;
+    border-radius: 15px;
+    flex-grow: 0;
+    /* ↓ In case the image URL can't be reached, the image alt text will not streatch out */
+    max-width: 130px;
+    min-width: 128px;
+}
+
+.Book-description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+.Book-link {
+    text-decoration: none;
+    color: #555555;
+    border-radius: 15px;
+}
+
+.Book-author {
+    font-weight: bold;
+}
+
+.Book-subtitle {
+    font-style: italic;
+}
+
+.Book-add-to-journal-button {
+    margin: 10px;
+    align-self: flex-start;
+    width: 128px;
+    background-color: #9DD0FE;
+    line-height: 1;
+    text-align: center;
+    border: none;
+    padding: 10px 0px;
+    border-radius: 7px;
+    color: #555555;
+    transition: color 0.3s, transform 0.3s;
+    cursor: copy;
+    flex-shrink: 0;
+}
+
+.Book-add-to-journal-button:focus {
+    outline: 0;
+}
+
+.Book-add-to-journal-button:hover {
+    color: #FFF3CD;
+}
+
+.Book-add-to-journal-button:active {
+    transform: translateY(2px);
+}
+
+.Book-is-in-Journal {
+    margin: 10px;
+    align-self: flex-start;
+    width: 128px;
+    line-height: 1;
+    text-align: center;
+    padding: 10px 0px;
+    color: #555555;
+    flex-shrink: 0;
+}
+
+.Book-lower-panel-container {
+    display: flex;
+    flex-direction: row;
+    border-radius: 0px 0px 15px 15px;
+}
+    
+.Book-lower-link {
+    width: 100%;
+    border-radius: 0px 0px 15px 0px;
+}
+
+@media (max-width: 1400px) {
+    .Book {
+        width: 70%;
+    }
+}
+
+@media (max-width: 1200px) {
+    .Book {
+        width: 80%;
+    }
+}
+
+@media (max-width: 400px) {
+    .Book {
+        width: 95%;
+    }
+}

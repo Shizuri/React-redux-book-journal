@@ -1,0 +1,163 @@
+.EditJournalEntry {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.EditJournalEntry-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 80%;
+    background-color: #FFD496;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.EditJournalEntry-img {
+    border-radius: 15px;
+    margin-right: 15px;
+}
+
+.EditJournalEntry-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.EditJournalEntry-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    flex: 1;
+}
+
+.EditJournalEntry-notes {
+    margin-bottom: 0px;
+}
+
+.EditJournalEntry-input {
+    background-color: #FFEACD;
+    border-radius: 15px;
+    border: none;
+}
+
+.EditJournalEntry-label>textarea {
+    text-align: left;
+    width: 50vw;
+    height: 200px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border-radius: 15px;
+    background-color: #FFEACD;
+    resize: none;
+}
+
+.EditJournalEntry-descriptor {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.EditJournalEntry-buttons-panel {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.EditJournalEntry-save-button{
+    background-color: #9DD0FE;
+    line-height: 1;
+    padding: 10px 10px;
+    border-radius: 7px;
+    color: #555555;
+    transition: color 0.3s, transform 0.3s;
+    cursor: pointer;
+    border: none;
+    width: 180px;
+    margin-right: 25px;
+}
+
+.EditJournalEntry-save-button:focus {
+    outline: 0;
+}
+
+.EditJournalEntry-save-button:hover {
+    color: #FFF3CD;
+}
+
+.EditJournalEntry-save-button:active {
+    transform: translateY(2px);
+}
+
+.EditJournalEntry-remove-button {
+    background-color: #9DD0FE;
+    line-height: 1;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 7px;
+    color: #555555;
+    transition: color 0.3s, transform 0.3s, background-color 2s;
+    cursor: pointer;
+    width: 180px;
+    margin-left: 25px;
+}
+
+.EditJournalEntry-remove-button:focus {
+    outline: 0;
+}
+
+.EditJournalEntry-remove-button:hover {
+    color: #FFF3CD;
+}
+
+.EditJournalEntry-remove-button:active {
+    transform: translateY(2px);
+}
+
+.EditJournalEntry-cancel-button {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    background-color: #D6D4FF;
+    line-height: 1;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 7px;
+    color: #555555;
+    transition: color 0.3s, transform 0.3s;
+    cursor: pointer;
+}
+
+.EditJournalEntry-cancel-button:focus {
+    outline: 0;
+}
+
+.EditJournalEntry-cancel-button:hover {
+    color: #FFF3CD;
+}
+
+.EditJournalEntry-cancel-button:active {
+    transform: translateY(2px);
+}
+
+@media (max-width: 600px) {
+    .EditJournalEntry-container {
+        flex-direction: column;
+    }
+    .EditJournalEntry-img {
+        align-self: center;
+        margin-bottom: 15px;
+    }
+    .EditJournalEntry-label>textarea {
+        width: 80vw;
+    }
+}
