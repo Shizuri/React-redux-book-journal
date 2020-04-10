@@ -77,9 +77,9 @@ const JournalEntryDetails = props => {
                                 <div className='JournalEntryDetails-rating'><span className='JournalEntryDetails-descriptor'>My rating:</span>
                                     <Ratings
                                         rating={rating}
-                                        widgetRatedColors='#A8A5FE'
+                                        widgetRatedColors='#bfbdff'
                                         widgetEmptyColors='#FFF3CD'
-                                        widgetHoverColors='#A8A5FE'
+                                        widgetHoverColors='#bfbdff'
                                         widgetSpacings='5px'
                                         widgetDimensions='45px'
                                     // changeRating={setRating} this way, by omitting changeRating from the props, the component is used only for display
