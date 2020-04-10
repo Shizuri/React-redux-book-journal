@@ -22,7 +22,7 @@
 }
 
 .Book-Browser-search-form:hover .Book-Browser-search-bar, .Book-Browser-search-form:hover .Book-Browser-search-button {
-    background-color: #9DD0FE;
+    background-color: #bfbdff;
 }
 
 .Book-Browser-search-button {
@@ -31,9 +31,9 @@
     line-height: 1;
     height: 50px;
     width: 50px;
-    background-color: #D1E9FF;
+    background-color: #D6D4FF;
     border-radius: 0px 15px 15px 0px;
-    transition: background-color 1s;
+    transition: all 1s;
     cursor: pointer;
 }
 
@@ -44,12 +44,12 @@
 .Book-Browser-search-bar {
     height: 50px;
     border: none;
-    background-color: #D1E9FF;
+    background-color: #D6D4FF;
     width: 300px;
     border-radius: 15px 0px 0px 15px;
     line-height: 1;
     color: #555555;
-    transition: background-color 1s;
+    transition: all 1s;
     padding: 0px 0px 0px 25px;
 }
 
@@ -136,8 +136,8 @@
     left: 50%;
     font-size: 2rem;
     color: #FFF3CD;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
 }
 
 @media (max-width: 490px) {
@@ -153,6 +153,6 @@
         left: 0%;
         font-size: 1.3rem;
         transform: translate(0%, 0%);
-        -ms-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%, -50%);
     }
 }

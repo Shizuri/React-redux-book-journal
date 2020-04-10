@@ -78,7 +78,7 @@
 
 .JournalEntryDetails-add-edit-button {
     display: inline-block;
-    background-color: #9DD0FE;
+    background-color: #bfbdff;
     line-height: 1;
     padding: 10px 10px;
     border-radius: 7px;
@@ -103,7 +103,7 @@
 }
 
 .JournalEntryDetails-remove-book-button {
-    background-color: #9DD0FE;
+    background-color: #bfbdff;
     line-height: 1;
     padding: 10px 10px;
     border: none;

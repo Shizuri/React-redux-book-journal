@@ -75,7 +75,7 @@
 }
 
 .EditJournalEntry-save-button{
-    background-color: #9DD0FE;
+    background-color: #bfbdff;
     line-height: 1;
     padding: 10px 10px;
     border-radius: 7px;
@@ -100,7 +100,7 @@
 }
 
 .EditJournalEntry-remove-button {
-    background-color: #9DD0FE;
+    background-color: #bfbdff;
     line-height: 1;
     padding: 10px 10px;
     border: none;
