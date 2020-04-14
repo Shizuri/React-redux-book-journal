@@ -1,25 +1,31 @@
 // This component provides the functionality to search and display books from the Google Books API.
 import './BookBrowser.css'
 import './loadingAnimation.css'
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import magnifyingGlass from './images/search-magnifying-glass-png-7-transparent-small.png'
 
 import Book from './Book'
-import { SearchContext } from './searchContext'
+
+import { connect } from 'react-redux'
+import { setSearchTerm, setBookResults, setTotalBooksFound, setLoadedBooksIndex} from './redux/searchData'
+
+const mapStateToProps = state => ({...state})
+
+const mapDispatchToProps = {
+    setSearchTerm: setSearchTerm,
+    setBookResults: setBookResults,
+    setTotalBooksFound: setTotalBooksFound,
+    setLoadedBooksIndex: setLoadedBooksIndex
+}
 
 const BookBrowser = props => {
     // This allows for the needed data to be available to all components even after they are unmounted by react-router
-    const {
-        searchTerm,
-        setSearchTerm,
-        bookResults,
-        setBookResults,
-        totalBooksFound,
-        setTotalBooksFound,
-        loadedBooksIndex,
-        setLoadedBooksIndex
-    } = useContext(SearchContext)
+
+    const searchTerm = props.searchData.searchTerm
+    const bookResults = props.searchData.bookResults
+    const totalBooksFound = props.searchData.totalBooksFound
+    const loadedBooksIndex = props.searchData.loadedBooksIndex
 
     const [isSearching, setIsSearching] = useState(false) // Is the app waiting for data from Google Books, needed for loading animations
     const [isLoadingMoreBooks, setIsLoadingMoreBooks] = useState(false) // Is the app waiting to load more books from the Google Books API
@@ -42,19 +48,19 @@ const BookBrowser = props => {
             .then(function (response) {
                 // If there are no books, update the state to represent that and stop searching
                 if (response.data.totalItems === 0) {
-                    setBookResults([])
-                    setTotalBooksFound(0)
+                    props.setBookResults([])
+                    props.setTotalBooksFound(0)
                     setIsSearching(false)
                 } else {
                     // If books are found, load them to state and stop searching
-                    setBookResults(response.data.items)
-                    setTotalBooksFound(response.data.totalItems)
+                    props.setBookResults(response.data.items)
+                    props.setTotalBooksFound(response.data.totalItems)
                     setIsSearching(false)
                     // Set the index, needed for loading more books, to the appropriate number
                     if (response.data.totalItems < 10) {
-                        setLoadedBooksIndex(response.data.totalItems)
+                        props.setLoadedBooksIndex(response.data.totalItems)
                     } else {
-                        setLoadedBooksIndex(maxResults)
+                        props.setLoadedBooksIndex(maxResults)
                     }
                 }
             })
@@ -78,11 +84,11 @@ const BookBrowser = props => {
                     // There is a bug in the Google Books API where they might send the same book more than one time.
                     // The following code filters the duplicates without a noticeable performance drop
                     const resultsFromLoadMore = [...response.data.items]
-                    const filteredForDublicates = resultsFromLoadMore.filter(result => !bookResults.some(oldEntry => oldEntry.id === result.id))
+                    const filteredForDuplicates = resultsFromLoadMore.filter(result => !bookResults.some(oldEntry => oldEntry.id === result.id))
                     // Updating book results and the search results index
-                    setBookResults(prevBookResults => [...prevBookResults, ...filteredForDublicates])
+                    props.setBookResults(filteredForDuplicates)
                     setIsLoadingMoreBooks(false)
-                    setLoadedBooksIndex(prevIndex => prevIndex + filteredForDublicates.length)
+                    props.setLoadedBooksIndex(filteredForDuplicates.length)
                 }
             })
             .catch(function (error) {
@@ -131,6 +137,8 @@ const BookBrowser = props => {
         setOverlay(prevOverlay => prevOverlay === 'none' ? 'block' : 'none')
     }
 
+    console.log('props: ', props)
+
     return (
         <div className='Book-Browser'>
             <div className='Book-Browser-intro'>
@@ -144,7 +152,7 @@ const BookBrowser = props => {
                         name='search-bar'
                         placeholder='Search for a book'
                         value={searchTerm}
-                        onChange={event => setSearchTerm(event.target.value)}
+                        onChange={event => props.setSearchTerm(event.target.value)}
                         className='Book-Browser-search-bar'
                     />
                     <button className='Book-Browser-search-button'><img src={magnifyingGlass} alt='magnifying glass' /></button>
@@ -169,4 +177,4 @@ const BookBrowser = props => {
     )
 }
 
-export default BookBrowser
+export default connect(mapStateToProps, mapDispatchToProps)(BookBrowser)

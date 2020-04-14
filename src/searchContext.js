@@ -7,7 +7,7 @@ const SearchContext = React.createContext()
 const SearchContextProvider = props => {
     const [searchTerm, setSearchTerm] = useState('') // The search term
     const [bookResults, setBookResults] = useState([]) // Storage array for all of the books data
-    const [totalBooksFound, setTotalBooksFound] = useState() // Number of books found
+    const [totalBooksFound, setTotalBooksFound] = useState(null) // Number of books found
     const [loadedBooksIndex, setLoadedBooksIndex] = useState(0) // Current index of loaded books. Needed for loading more books
 
     return (
