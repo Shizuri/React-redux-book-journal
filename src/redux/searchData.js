@@ -15,6 +15,13 @@ export const setBookResults = results => {
     }
 }
 
+export const setLoadMoreBookResults = results => {
+    return {
+        type: 'SET_LOAD_MORE_BOOK_RESULTS',
+        payload: results
+    }
+}
+
 export const setTotalBooksFound = amount => {
     return {
         type: 'SET_TOTAL_BOOKS_FOUND',
@@ -44,6 +51,11 @@ const searchDataReducer = (searchDataState = initialState, action) => {
                 searchTerm: action.payload
             }
         case 'SET_BOOK_RESULTS':
+            return {
+                ...searchDataState,
+                bookResults: action.payload
+            }
+        case 'SET_LOAD_MORE_BOOK_RESULTS':
             return {
                 ...searchDataState,
                 bookResults: [...searchDataState.bookResults, ...action.payload]

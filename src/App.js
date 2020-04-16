@@ -7,6 +7,9 @@ import JournalEntryDetails from './JournalEntryDetails'
 import EditJournalEntry from './EditJournalEntry'
 import { NavLink, Route, Switch, Redirect, withRouter } from 'react-router-dom'
 
+import { connect } from 'react-redux'
+import { setMyBooks } from './redux/journalData'
+
 class App extends Component {
 	swipeNavigate() {
 		// The code here is for the purpose of swipe navigation on mobile devices
@@ -63,6 +66,11 @@ class App extends Component {
 		document.addEventListener('touchmove', moveTouch, false)
 	}
 
+	componentDidMount() {
+		// Load the books from localStorage to state at the start of the application.
+		this.props.setMyBooks(JSON.parse(localStorage.getItem('books') || '[]'))
+	}
+
 	render() {
 		this.swipeNavigate()
 		// console.log('App props: ', this.props)	
@@ -97,5 +105,13 @@ class App extends Component {
 	}
 }
 
-export default withRouter(App)
+// Needed for Redux connect()
+const mapStateToProps = state => ({ ...state.journalData })
+
+// Needed for Redux connect()
+const mapDispatchToProps = {
+    setMyBooks: setMyBooks
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
 // withRouter is needed for the access of the current page location this.props.history.location.pathname
