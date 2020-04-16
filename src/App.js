@@ -65,6 +65,7 @@ class App extends Component {
 
 	render() {
 		this.swipeNavigate()
+		// console.log('App props: ', this.props)	
 
 		return (
 			<div className='App'>

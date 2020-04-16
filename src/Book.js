@@ -7,7 +7,12 @@ import { JournalContext } from './journalContext'
 import './Book.css'
 import useFormatAuthors from './hooks/useFormatAuthors'
 
+import { connect } from 'react-redux'
+import { setMyBooks } from './redux/journalData'
+
 const Book = props => {
+    // console.log('Book props: ', props)
+
     const { title, subtitle, authors, imageLinks } = { ...props.book.volumeInfo } // Destructure the needed data from the props
     const { id } = { ...props.book } // Destructure the needed data from the props
 
@@ -41,4 +46,12 @@ const Book = props => {
     )
 }
 
-export default Book
+// Needed for Redux connect()
+const mapStateToProps = state => ({ ...state })
+
+// Needed for Redux connect()
+const mapDispatchToProps = {
+    setMyBooks: setMyBooks
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Book)

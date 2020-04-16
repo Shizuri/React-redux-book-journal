@@ -23,9 +23,9 @@ class BookBrowser extends Component {
     // Needed to prevent page reload, preventing queries with 0 length strings and setting the state of searching for books to true
     handleSubmit = event => {
         event.preventDefault()
-        if (this.props.searchData.searchTerm.length > 0) {
+        if (this.props.searchTerm.length > 0) {
             this.setState({ isSearching: true })
-            this.getBooks(this.props.searchData.searchTerm)
+            this.getBooks(this.props.searchTerm)
         }
     }
 
@@ -63,7 +63,7 @@ class BookBrowser extends Component {
         const maxResults = 10
         this.setState({ isLoadingMoreBooks: true })
 
-        axios.get(`https://www.googleapis.com/books/v1/volumes?q=${this.props.searchData.searchTerm}&maxResults=${maxResults}&startIndex=${this.props.searchData.loadedBooksIndex}&orderBy=relevance`)
+        axios.get(`https://www.googleapis.com/books/v1/volumes?q=${this.props.searchTerm}&maxResults=${maxResults}&startIndex=${this.props.loadedBooksIndex}&orderBy=relevance`)
             .then(response => {
                 // If the API runs out of books it does not have 'response.data.items' in the object
                 if (response.data.items === undefined) {
@@ -72,7 +72,7 @@ class BookBrowser extends Component {
                     // There is a bug in the Google Books API where they might send the same book more than one time.
                     // The following code filters the duplicates without a noticeable performance drop
                     const resultsFromLoadMore = [...response.data.items]
-                    const filteredForDuplicates = resultsFromLoadMore.filter(result => !this.props.searchData.bookResults.some(oldEntry => oldEntry.id === result.id))
+                    const filteredForDuplicates = resultsFromLoadMore.filter(result => !this.props.bookResults.some(oldEntry => oldEntry.id === result.id))
                     // Updating book results and the search results index
                     this.props.setBookResults(filteredForDuplicates)
                     this.setState({ isLoadingMoreBooks: false })
@@ -103,11 +103,11 @@ class BookBrowser extends Component {
             // Place a loading animation if the data is not fetched yet
             return <div className='loading-animation-container'><div className='lds-ellipsis'><div></div><div></div><div></div><div></div></div></div>
         } else {
-            if (this.props.searchData.totalBooksFound === 0) {
-                return <p>No books found for the "{this.props.searchData.searchTerm}" query.</p>
+            if (this.props.totalBooksFound === 0) {
+                return <p>No books found for the "{this.props.searchTerm}" query.</p>
             }
             return (
-                this.props.searchData.bookResults.map(book => <Book book={book} key={book.id} />)
+                this.props.bookResults.map(book => <Book book={book} key={book.id} />)
             )
         }
     }
@@ -123,12 +123,13 @@ class BookBrowser extends Component {
                 // The Load More Books button will stay in place even if there are no more results.
                 // This is because the Google Books API is a bit strange. After some time of sending no more results in the array of results
                 // it can update itself with new data. Because of this, the LMB button is not conditionally removed if there are no more results.
-                return this.props.searchData.totalBooksFound > 0 ? <button onClick={this.loadMoreBooks} className='Book-Browser-load-more-books-button'>Load more Books</button> : null
+                return this.props.totalBooksFound > 0 ? <button onClick={this.loadMoreBooks} className='Book-Browser-load-more-books-button'>Load more Books</button> : null
             }
         }
     }
 
     render() {
+        console.log('BookBrowser props: ', this.props)
         return (
             <div className='Book-Browser'>
                 <div className='Book-Browser-intro'>
@@ -141,7 +142,7 @@ class BookBrowser extends Component {
                             type='text'
                             name='search-bar'
                             placeholder='Search for a book'
-                            value={this.props.searchData.searchTerm}
+                            value={this.props.searchTerm}
                             onChange={event => this.props.setSearchTerm(event.target.value)}
                             className='Book-Browser-search-bar'
                         />
@@ -169,7 +170,7 @@ class BookBrowser extends Component {
 }
 
 // Needed for Redux connect()
-const mapStateToProps = state => ({ ...state })
+const mapStateToProps = state => ({ ...state.searchData })
 
 // Needed for Redux connect()
 const mapDispatchToProps = {

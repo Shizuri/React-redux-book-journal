@@ -1,8 +1,10 @@
 import { createStore, combineReducers } from 'redux'
 import searchDataReducer from './searchData'
+import journalDataReducer from './journalData'
 
 const rootReducer = combineReducers({
-    searchData: searchDataReducer
+    searchData: searchDataReducer,
+    journalData: journalDataReducer
 })
 
 const store = createStore(rootReducer)

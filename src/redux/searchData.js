@@ -1,3 +1,6 @@
+// This file provides storage for the BookBrowser part of the application.
+// The state is kept here because react-router will unmount the data if it's kept in the BookBrowser component.
+// This way we can browse the app and once we return the BookBrowser, the search query and results will still be here.
 export const setSearchTerm = term => {
     return {
         type: 'SET_SEARCH_TERM',
