@@ -1,4 +1,4 @@
-import redux, { createStore, combineReducers } from 'redux'
+import { createStore, combineReducers } from 'redux'
 import searchDataReducer from './searchData'
 
 const rootReducer = combineReducers({
@@ -6,5 +6,5 @@ const rootReducer = combineReducers({
 })
 
 const store = createStore(rootReducer)
-store.subscribe(() => console.log('in index.js ', store.getState()))
+// DDD store.subscribe(() => console.log('in index.js ', store.getState()))
 export default store
