@@ -8,29 +8,29 @@ import EditJournalEntry from './EditJournalEntry'
 import { NavLink, Route, Switch, Redirect, withRouter } from 'react-router-dom'
 
 class App extends Component {
-	render() {
+	swipeNavigate() {
 		// The code here is for the purpose of swipe navigation on mobile devices
-	
+
 		// Swipe Up / Down / Left / Right
 		let initialX = null
 		let initialY = null
-	
+
 		const startTouch = e => {
 			initialX = e.touches[0].clientX
 			initialY = e.touches[0].clientY
 		}
-	
+
 		const moveTouch = e => {
 			if (!initialX || !initialY) {
 				return
 			}
-	
+
 			const currentX = e.touches[0].clientX
 			const currentY = e.touches[0].clientY
-	
+
 			const diffX = initialX - currentX
 			const diffY = initialY - currentY
-	
+
 			if (Math.abs(diffX) > Math.abs(diffY)) {
 				// sliding horizontally
 				if (diffX > 0) {
@@ -52,23 +52,27 @@ class App extends Component {
 					// swiped down
 				}
 			}
-	
+
 			initialX = null
 			initialY = null
-	
+
 			e.preventDefault()
 		}
-	
+
 		document.addEventListener('touchstart', startTouch, false)
 		document.addEventListener('touchmove', moveTouch, false)
-	
+	}
+
+	render() {
+		this.swipeNavigate()
+
 		return (
 			<div className='App'>
 				<nav className='App-nav'>
 					<NavLink exact to='/book-browser' activeClassName='App-nav-active' className='App-nav-link'>Book Browser</NavLink>
 					<NavLink exact to='/journal' activeClassName='App-nav-active' className='App-nav-link'>Book Journal</NavLink>
 				</nav>
-	
+
 				<Switch>
 					<Route exact path='/book-browser'>
 						<BookBrowser />
@@ -93,3 +97,4 @@ class App extends Component {
 }
 
 export default withRouter(App)
+// withRouter is needed for the access of the current page location this.props.history.location.pathname
