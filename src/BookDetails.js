@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom'
 import './BookDetails.css'
 
 import { connect } from 'react-redux'
-import { setMyBooks } from './redux/journalData'
+import { setMyBooks, setFilteredBooks } from './redux/journalData'
 
 class BookDetails extends Component {
     constructor(props) {
@@ -69,6 +69,11 @@ class BookDetails extends Component {
             const updatedBooks = [book, ...this.props.journalData.myBooks]
             localStorage.setItem('books', JSON.stringify(updatedBooks))
             this.props.setMyBooks(updatedBooks)
+            // Update myBooks and filteredBooks after the book has been added to the Journal
+            const journalEntryBooks = JSON.parse(localStorage.getItem('books') || '[]')
+            this.props.setMyBooks(journalEntryBooks)
+            // Journal shows filteredBooks instead of books. This provides an immediate update
+            this.props.setFilteredBooks(journalEntryBooks)
         }
     }
 
@@ -153,7 +158,8 @@ const mapStateToProps = state => ({ ...state })
 
 // Needed for Redux connect()
 const mapDispatchToProps = {
-    setMyBooks
+    setMyBooks,
+    setFilteredBooks
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(BookDetails))

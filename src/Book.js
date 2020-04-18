@@ -7,7 +7,7 @@ import './Book.css'
 import useFormatAuthors from './hooks/useFormatAuthors'
 
 import { connect } from 'react-redux'
-import { setMyBooks } from './redux/journalData'
+import { setMyBooks, setFilteredBooks } from './redux/journalData'
 
 class Book extends Component {
     addBookToJournal = (bookInput) => {
@@ -27,6 +27,11 @@ class Book extends Component {
             const updatedBooks = [book, ...this.props.myBooks]
             localStorage.setItem('books', JSON.stringify(updatedBooks))
             this.props.setMyBooks(updatedBooks)
+            // Update myBooks and filteredBooks after the book has been added to the Journal
+            const journalEntryBooks = JSON.parse(localStorage.getItem('books') || '[]')
+            this.props.setMyBooks(journalEntryBooks)
+            // Journal shows filteredBooks instead of books. This provides an immediate update
+            this.props.setFilteredBooks(journalEntryBooks)
         }
     }
 
@@ -69,7 +74,8 @@ const mapStateToProps = state => ({ ...state.journalData })
 
 // Needed for Redux connect()
 const mapDispatchToProps = {
-    setMyBooks
+    setMyBooks,
+    setFilteredBooks
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Book))

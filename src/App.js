@@ -67,10 +67,10 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		// Load the books from localStorage to state at the start of the application.\
-		const books = JSON.parse(localStorage.getItem('books') || '[]')
-		this.props.setMyBooks(books)
-		this.props.setFilteredBooks(books)
+		// Load the books from localStorage to state at the start of the application.
+		const journalEntryBooks = JSON.parse(localStorage.getItem('books') || '[]')
+		this.props.setMyBooks(journalEntryBooks)
+		this.props.setFilteredBooks(journalEntryBooks)
 	}
 
 	render() {
