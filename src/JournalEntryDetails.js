@@ -8,6 +8,14 @@ import { connect } from 'react-redux'
 import { setMyBooks, setFilteredBooks } from './redux/journalData'
 
 class JournalEntryDetails extends Component {
+    // These values are needed in more than one method including the render method.
+    // Because of this they are provided as private class instance variables
+    properlyLoaded = true
+    // Get the book id that is sent as the book parameter in the URL
+    bookId = this.props.match.params.bookId
+    bookTitle = ''
+    bookThumbnail = ''
+
     constructor(props) {
         super(props)
         this.state = {
@@ -18,13 +26,6 @@ class JournalEntryDetails extends Component {
             notes: '',
             hasEntry: false
         }
-
-        // These values are needed in more than one method including the render method so they are provided as class instance variables
-        this.properlyLoaded = true
-        // Get the book id that is sent as the book parameter in the URL
-        this.bookId = this.props.match.params.bookId
-        this.bookTitle = ''
-        this.bookThumbnail = ''
     }
 
     // Provide a confirmation and page redirection after the book is removed from the Journal
@@ -63,9 +64,7 @@ class JournalEntryDetails extends Component {
         document.title = this.bookTitle
     }
 
-    render() {
-        console.log('props: ', this.props)
-
+    loadBookDetails() {
         // If the page is loaded directly by its URL, make sure that it's a valid journal entry
         try {
             ({ bookTitle: this.bookTitle, bookThumbnail: this.bookThumbnail } = this.props.myBooks.filter(book => book.bookId === this.bookId)[0])
@@ -73,6 +72,10 @@ class JournalEntryDetails extends Component {
         } catch (error) {
             this.properlyLoaded = false
         }
+    }
+
+    render() {
+        this.loadBookDetails()
 
         return (
             <div className='JournalEntryDetails-prime'>
