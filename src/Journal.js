@@ -1,74 +1,83 @@
 // This component lists prints the books in the users journal.
-import React, { useContext, useEffect } from 'react'
-import { JournalContext } from './journalContext'
+import React, { Component } from 'react'
 import JournalEntry from './JournalEntry'
 import './Journal.css'
 import magnifyingGlass from './images/search-magnifying-glass-png-7-transparent-small.png'
 
-const Journal = props => {
-    // myBooks contains bookId, bookTitle, bookThumbnail, bookAuthors and bookSubtitle
-    // Keeping all of the state in journalContext provides a smooth experience when changing routes and no unneeded re-renders.
-    const { myBooks, searchTerm, setSearchTerm, filteredBooks, setFilteredBooks } = useContext(JournalContext)
+// Keeping all of the state in Redux provides a smooth experience when changing routes and no unneeded re-renders.
+import { connect } from 'react-redux'
+import { setMyBooks, setSearchTerm, setFilteredBooks } from './redux/journalData'
+
+class Journal extends Component {
 
     // Just a cosmetic non-button.
-    const handleSubmit = event => {
+    handleSubmit = event => {
         event.preventDefault()
     }
 
-    const handleChange = value => {
-        setSearchTerm(value)
+    handleChange = value => {
+        this.props.setSearchTerm(value)
         // Filtering the Journal Entries by book title or authors 
-        setFilteredBooks(prevFilteredBooks => {
-            return (
-                myBooks.filter(
-                    book => {
-                        return (
-                            // Filter by title
-                            (book.bookTitle.toLowerCase().includes(value.toLowerCase()))
-                            ||
-                            // Filter by author
-                            (book.bookAuthors ? book.bookAuthors.some(author => author.toLowerCase().includes(value.toLowerCase())) : false)
-                        )
-                    }
-                )
-
+        this.props.setFilteredBooks(
+            this.props.myBooks.filter(
+                book => {
+                    return (
+                        // Filter by title
+                        (book.bookTitle.toLowerCase().includes(value.toLowerCase()))
+                        ||
+                        // Filter by author
+                        (book.bookAuthors ? book.bookAuthors.some(author => author.toLowerCase().includes(value.toLowerCase())) : false)
+                    )
+                }
             )
-        })
+        )
     }
 
     // Setting the document title
-    useEffect(() => {
+    componentDidMount() {
         document.title = 'Journal'
-    }, [])
+    }
 
-    return (
-        <div className='Journal'>
-            {
-                myBooks.length === 0 ?
-                    <p className='Journal-intro'>Add some books to your Journal from the Book Browser</p> :
-                    <>
-                        <div className='Journal-intro'>
-                            Filter the books in your Journal<br />
+    render() {
+        return (
+            <div className='Journal'>
+                {
+                    this.props.myBooks.length === 0 ?
+                        <p className='Journal-intro'>Add some books to your Journal from the Book Browser</p> :
+                        <>
+                            <div className='Journal-intro'>
+                                Filter the books in your Journal<br />
                             by title or author name
                             </div>
-                        <div className='Journal-search-form-container'>
-                            <form onSubmit={handleSubmit} className='Journal-search-form'>
-                                <input
-                                    type='text'
-                                    name='search-bar'
-                                    placeholder='Filter books'
-                                    value={searchTerm}
-                                    onChange={event => handleChange(event.target.value)}
-                                    className='Journal-search-bar'
-                                />
-                                <button className='Journal-search-button'><img src={magnifyingGlass} alt='magnifying glass' /></button>
-                            </form>
-                        </div>
-                        {filteredBooks.map(book => <JournalEntry book={book} key={book.bookId} />)}
-                    </>
-            }
-        </div >
-    )
+                            <div className='Journal-search-form-container'>
+                                <form onSubmit={this.handleSubmit} className='Journal-search-form'>
+                                    <input
+                                        type='text'
+                                        name='search-bar'
+                                        placeholder='Filter books'
+                                        value={this.props.searchTerm}
+                                        onChange={event => this.handleChange(event.target.value)}
+                                        className='Journal-search-bar'
+                                    />
+                                    <button className='Journal-search-button'><img src={magnifyingGlass} alt='magnifying glass' /></button>
+                                </form>
+                            </div>
+                            {this.props.filteredBooks.map(book => <JournalEntry book={book} key={book.bookId} />)}
+                        </>
+                }
+            </div >
+        )
+    }
 }
 
-export default Journal
+// Needed for Redux connect()
+const mapStateToProps = state => ({ ...state.journalData })
+
+// Needed for Redux connect()
+const mapDispatchToProps = {
+    setMyBooks,
+    setSearchTerm,
+    setFilteredBooks
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Journal)

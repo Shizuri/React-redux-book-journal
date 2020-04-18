@@ -8,7 +8,7 @@ import EditJournalEntry from './EditJournalEntry'
 import { NavLink, Route, Switch, Redirect, withRouter } from 'react-router-dom'
 
 import { connect } from 'react-redux'
-import { setMyBooks } from './redux/journalData'
+import { setMyBooks, setFilteredBooks } from './redux/journalData'
 
 class App extends Component {
 	swipeNavigate() {
@@ -67,8 +67,10 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		// Load the books from localStorage to state at the start of the application.
-		this.props.setMyBooks(JSON.parse(localStorage.getItem('books') || '[]'))
+		// Load the books from localStorage to state at the start of the application.\
+		const books = JSON.parse(localStorage.getItem('books') || '[]')
+		this.props.setMyBooks(books)
+		this.props.setFilteredBooks(books)
 	}
 
 	render() {
@@ -110,7 +112,8 @@ const mapStateToProps = state => ({ ...state.journalData })
 
 // Needed for Redux connect()
 const mapDispatchToProps = {
-    setMyBooks: setMyBooks
+	setMyBooks,
+	setFilteredBooks
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))

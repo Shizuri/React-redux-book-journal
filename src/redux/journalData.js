@@ -7,6 +7,20 @@ export const setMyBooks = books => {
     }
 }
 
+export const setSearchTerm = term => {
+    return {
+        type: 'SET_SEARCH_TERM',
+        payload: term
+    }
+}
+
+export const setFilteredBooks = books => {
+    return {
+        type: 'SET_FILTERED_BOOKS',
+        payload: books
+    }
+}
+
 const initialState = {
     myBooks: [],
     searchTerm: '',
@@ -19,6 +33,16 @@ const journalDataReducer = (journalDataState = initialState, action) => {
             return {
                 ...journalDataState,
                 myBooks: action.payload
+            }
+        case 'SET_SEARCH_TERM':
+            return {
+                ...journalDataState,
+                searchTerm: action.payload
+            }
+        case 'SET_FILTERED_BOOKS':
+            return {
+                ...journalDataState,
+                filteredBooks: action.payload
             }
         default:
             return journalDataState

@@ -157,5 +157,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(BookDetails))
-
-// Component to show all of the details about a book once it is clicked in the list of queried books
