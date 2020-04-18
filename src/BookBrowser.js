@@ -173,15 +173,15 @@ const mapStateToProps = state => ({ ...state })
 
 // Needed for Redux connect()
 const mapDispatchToProps = {
-    setSearchTerm: setSearchTerm,
-    setBookResults: setBookResults,
-    setLoadMoreBookResults: setLoadMoreBookResults,
-    setTotalBooksFound: setTotalBooksFound,
-    setLoadedBooksIndex: setLoadedBooksIndex
+    setSearchTerm,
+    setBookResults,
+    setLoadMoreBookResults,
+    setTotalBooksFound,
+    setLoadedBooksIndex
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookBrowser)
 
 
 
-// fix it by chaning line 172 to const mapStateToProps = state => ({ ...state.searchData })
+// fix it by changing line 172 to const mapStateToProps = state => ({ ...state.searchData })

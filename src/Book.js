@@ -69,7 +69,7 @@ const mapStateToProps = state => ({ ...state.journalData })
 
 // Needed for Redux connect()
 const mapDispatchToProps = {
-    setMyBooks: setMyBooks
+    setMyBooks
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Book))
