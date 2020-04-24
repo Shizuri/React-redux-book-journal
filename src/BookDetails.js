@@ -100,7 +100,6 @@ class BookDetails extends Component {
         const bookId = this.props.match.params.bookId // Get the book id that is sent as the book parameter in the URL
         const bookIsInJournal = this.props.journalData.myBooks.some(book => book.bookId === bookId) // Check if the book is already in the Journal
         const book = this.state.book
-        console.log('props: ', this.props)
 
         // The Google Books API just omits the object property if there is no data! This is how we handle this problem
         const subtitle = book.subtitle ? book.subtitle : <i>Subtitle not available</i>

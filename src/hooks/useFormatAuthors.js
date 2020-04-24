@@ -1,3 +1,4 @@
+// This hook was used as a proof that the concept of hooks can be used in class components
 import React from 'react'
 
 // Formatting authors they are missing or if there is more than one.

@@ -10,6 +10,8 @@ import { setMyBooks, setFilteredBooks } from './redux/journalData'
 class JournalEntryDetails extends Component {
     // These values are needed in more than one method including the render method.
     // Because of this they are provided as private class instance variables
+
+    // If the page is loaded directly by its URL, make sure that it's a valid journal entry
     properlyLoaded = true
     // Get the book id that is sent as the book parameter in the URL
     bookId = this.props.match.params.bookId
