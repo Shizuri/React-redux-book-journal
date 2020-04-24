@@ -146,13 +146,23 @@
     }
 }
 
+@media (max-width: 1200px) {
+    .Book-Browser-overlay-text {
+        top: 50%;
+        left: 20%;
+        font-size: 1.7rem;
+        transform: translate(-15%, -50%);
+        -ms-transform: translate(-50%, -50%);
+    }
+}
+
 @media (max-width: 650px) {
     .Book-Browser-overlay-text {
         padding: 20px;
-        top: 15%;
+        top: 25%;
         left: 0%;
         font-size: 1.3rem;
         transform: translate(0%, 0%);
-        -ms-transform: translate(-50%, -50%);
+        -ms-transform: translate(0%, 0%);
     }
 }
