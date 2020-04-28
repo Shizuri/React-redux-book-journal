@@ -156,7 +156,7 @@ class BookBrowser extends Component {
                         All of the data is provided by the public <i>Google Books API</i>.
                     Once you find your books you can store them in your Journal.
                     There you can note the start and finish date, rate the book and review your experience.</p>
-                        <p>This React application was developed by using Class Components and Redux.
+                        <p>This React single page application was developed by using Class Components, Redux and React Router.
                             <br />All data is kept in localStorage.
                         </p>
                         <p>Coding and design by<br /><b>Zdravko Mavkov</b></p>
