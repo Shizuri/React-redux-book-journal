@@ -9,32 +9,9 @@ import useFormatAuthors from './hooks/useFormatAuthors'
 import { connect } from 'react-redux'
 import { setMyBooks, setFilteredBooks } from './redux/journalData'
 
+import AddBookToJournal from './helperComponents/AddBookToJournal'
+
 class Book extends Component {
-    addBookToJournal = (bookInput) => {
-        const book = {
-            bookId: bookInput.id,
-            bookTitle: bookInput.title,
-            bookSubtitle: bookInput.subtitle ? bookInput.subtitle : null,
-            bookAuthors: bookInput.authors ? bookInput.authors : null,
-            bookThumbnail: bookInput.img
-        }
-
-        // Check if the book is already in the Journal, if not add it to localStorage and update the state
-        if (this.props.myBooks.some(b => b.bookId === bookInput.id)) {
-            // Redundancy to check if book is already in the Journal
-            alert('This book is already in your Journal')
-        } else {
-            const updatedBooks = [book, ...this.props.myBooks]
-            localStorage.setItem('books', JSON.stringify(updatedBooks))
-            this.props.setMyBooks(updatedBooks)
-            // Update myBooks and filteredBooks after the book has been added to the Journal
-            const journalEntryBooks = JSON.parse(localStorage.getItem('books') || '[]')
-            this.props.setMyBooks(journalEntryBooks)
-            // Journal shows filteredBooks instead of books. This provides an immediate update
-            this.props.setFilteredBooks(journalEntryBooks)
-        }
-    }
-
     render() {
         const { title, subtitle, authors, imageLinks } = { ...this.props.book.volumeInfo } // Destructure the needed data from the props
         const { id } = { ...this.props.book } // Destructure the needed data from the props
@@ -61,7 +38,10 @@ class Book extends Component {
                 <div className='Book-lower-panel-container'>
                     {bookIsInJournal ?
                         <div className='Book-is-in-Journal'>Book is in Journal</div>
-                        : <button onClick={() => this.addBookToJournal({ id, title, img, subtitle, authors })} className='Book-add-to-journal-button'>Add to Journal</button>}
+                        : 
+                        // This is a helper component for adding books to the Journal
+                        <AddBookToJournal classNameProp='Book-add-to-journal-button' bookInput={{ id, title, img, subtitle, authors }} />
+                        }
                     <Link to={`${url}/${id}`} className='Book-lower-link'></Link>
                 </div>
             </div>

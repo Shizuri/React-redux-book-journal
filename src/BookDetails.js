@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import BookCoverNotAvailable from './images/BookCoverNotAvailable.png'
 import { withRouter } from 'react-router-dom'
 import './BookDetails.css'
+import AddBookToJournal from './helperComponents/AddBookToJournal'
 
 import { connect } from 'react-redux'
 import { setMyBooks, setFilteredBooks } from './redux/journalData'
@@ -50,31 +51,6 @@ class BookDetails extends Component {
     cleanHtml = html => {
         const doc = new DOMParser().parseFromString(html, 'text/html');
         return doc.body.textContent || "";
-    }
-
-    addBookToJournal = (bookInput) => {
-        const book = {
-            bookId: bookInput.id,
-            bookTitle: bookInput.title,
-            bookSubtitle: bookInput.subtitle ? bookInput.subtitle : null,
-            bookAuthors: bookInput.authors ? bookInput.authors : null,
-            bookThumbnail: bookInput.img
-        }
-
-        // Check if the book is already in the Journal, if not add it to localStorage and update the state
-        if (this.props.journalData.myBooks.some(b => b.bookId === bookInput.id)) {
-            // Redundancy to check if book is already in the Journal
-            alert('This book is already in your Journal')
-        } else {
-            const updatedBooks = [book, ...this.props.journalData.myBooks]
-            localStorage.setItem('books', JSON.stringify(updatedBooks))
-            this.props.setMyBooks(updatedBooks)
-            // Update myBooks and filteredBooks after the book has been added to the Journal
-            const journalEntryBooks = JSON.parse(localStorage.getItem('books') || '[]')
-            this.props.setMyBooks(journalEntryBooks)
-            // Journal shows filteredBooks instead of books. This provides an immediate update
-            this.props.setFilteredBooks(journalEntryBooks)
-        }
     }
 
     // Because of inconsistency issues with the Google Books API some requests require a bit of management 
@@ -123,13 +99,16 @@ class BookDetails extends Component {
                         <img src={img} alt={book.title} className='BookDetails-img' />
                         {bookIsInJournal ?
                             <div className='BookDetails-is-in-Journal'>Book is in Journal</div>
-                            : <button onClick={() => this.addBookToJournal({
+                            :
+                            // This is a helper component for adding books to the Journal
+                            <AddBookToJournal classNameProp='BookDetails-add-to-journal-button' bookInput={{
                                 id: bookId,
                                 title: book.title,
                                 img,
                                 subtitle: book.subtitle,
                                 authors: book.authors
-                            })} className='BookDetails-add-to-journal-button'>Add to Journal</button>}
+                            }} />
+                        }
                     </div>
                     <div className='BookDetails-right-panel'>
                         <p><span className='BookDetails-descriptor'>Title:</span> {book.title}</p>

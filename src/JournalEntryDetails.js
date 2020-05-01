@@ -40,13 +40,12 @@ class JournalEntryDetails extends Component {
 
     removeBookFromJournal = bookId => {
         const updatedMyBooks = this.props.myBooks.filter(book => book.bookId !== bookId)
-        setMyBooks(updatedMyBooks)
+        // Update myBooks and filteredBooks after the book has been removed from the Journal
+        this.props.setMyBooks(updatedMyBooks)
+        this.props.setFilteredBooks(updatedMyBooks)
+        // Update the localStorage after the book has been removed from the Journal
         localStorage.setItem('books', JSON.stringify(updatedMyBooks))
         localStorage.removeItem(bookId)
-        // Update myBooks and filteredBooks after the book has been removed from the Journal
-        const journalEntryBooks = JSON.parse(localStorage.getItem('books') || '[]')
-        this.props.setMyBooks(journalEntryBooks)
-        this.props.setFilteredBooks(journalEntryBooks)
     }
 
     componentDidMount() {
