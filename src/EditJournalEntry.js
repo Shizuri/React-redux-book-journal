@@ -5,7 +5,7 @@ import './EditJournalEntry.css'
 import Ratings from 'react-ratings-declarative'
 
 import { connect } from 'react-redux'
-import { setMyBooks } from './redux/journalData'
+import { setMyBooks, setFilteredBooks } from './redux/journalData'
 
 class EditJournalEntry extends Component {
     // These values are needed in more than one method including the render method.
@@ -58,6 +58,7 @@ class EditJournalEntry extends Component {
         // Update myBooks after the book has been removed from the Journal
         const journalEntryBooks = JSON.parse(localStorage.getItem('books') || '[]')
         this.props.setMyBooks(journalEntryBooks)
+        this.props.setFilteredBooks(journalEntryBooks)
     }
 
     componentDidMount() {
@@ -170,7 +171,8 @@ const mapStateToProps = state => ({ ...state.journalData })
 
 // Needed for Redux connect()
 const mapDispatchToProps = {
-    setMyBooks
+    setMyBooks,
+    setFilteredBooks
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditJournalEntry))
