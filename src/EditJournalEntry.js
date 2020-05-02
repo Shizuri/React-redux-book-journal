@@ -5,7 +5,7 @@ import './EditJournalEntry.css'
 import Ratings from 'react-ratings-declarative'
 
 import { connect } from 'react-redux'
-import { setMyBooks, setFilteredBooks } from './redux/journalData'
+import RemoveBookFromJournal from './helperComponents/RemoveBookFromJournal'
 
 class EditJournalEntry extends Component {
     // These values are needed in more than one method including the render method.
@@ -40,25 +40,6 @@ class EditJournalEntry extends Component {
         const journalEntry = { startDate, finishDate, rating, review, notes }
         localStorage.setItem(this.bookId, JSON.stringify(journalEntry))
         this.props.history.push(`/journal/${this.bookId}`)
-    }
-
-    // Provide a confirmation and page redirection after the book is removed from the Journal
-    handleRemoveBook = () => {
-        if (window.confirm(`Are you sure that you want to remove ${this.bookTitle} from your Journal?`)) {
-            this.removeBookFromJournal(this.bookId)
-            this.props.history.push('/journal')
-        }
-    }
-
-    removeBookFromJournal = bookId => {
-        const updatedMyBooks = this.props.myBooks.filter(book => book.bookId !== bookId)
-        setMyBooks(updatedMyBooks)
-        localStorage.setItem('books', JSON.stringify(updatedMyBooks))
-        localStorage.removeItem(bookId)
-        // Update myBooks after the book has been removed from the Journal
-        const journalEntryBooks = JSON.parse(localStorage.getItem('books') || '[]')
-        this.props.setMyBooks(journalEntryBooks)
-        this.props.setFilteredBooks(journalEntryBooks)
     }
 
     componentDidMount() {
@@ -102,7 +83,7 @@ class EditJournalEntry extends Component {
                                         type='date'
                                         name='startDate'
                                         value={this.state.startDate}
-                                        onChange={event => this.setState({startDate: event.target.value})}
+                                        onChange={event => this.setState({ startDate: event.target.value })}
                                         className='EditJournalEntry-input'
                                     />
                                 </label>
@@ -111,7 +92,7 @@ class EditJournalEntry extends Component {
                                         type='date'
                                         name='finishDate'
                                         value={this.state.finishDate}
-                                        onChange={event => this.setState({finishDate: event.target.value})}
+                                        onChange={event => this.setState({ finishDate: event.target.value })}
                                         className='EditJournalEntry-input'
                                     />
                                 </label>
@@ -124,7 +105,7 @@ class EditJournalEntry extends Component {
                                         widgetHoverColors='#bfbdff'
                                         widgetSpacings='5px'
                                         widgetDimensions='45px'
-                                        changeRating={newRating => this.setState({rating: newRating})}
+                                        changeRating={newRating => this.setState({ rating: newRating })}
                                     >
                                         <Ratings.Widget />
                                         <Ratings.Widget />
@@ -138,7 +119,7 @@ class EditJournalEntry extends Component {
                                         type='textarea'
                                         name='review'
                                         value={this.state.review}
-                                        onChange={event => this.setState({review: event.target.value})}
+                                        onChange={event => this.setState({ review: event.target.value })}
                                         className='EditJournalEntry-input'
                                     />
                                 </label>
@@ -147,7 +128,7 @@ class EditJournalEntry extends Component {
                                         type='text'
                                         name='notes'
                                         value={this.state.notes}
-                                        onChange={event => this.setState({notes: event.target.value})}
+                                        onChange={event => this.setState({ notes: event.target.value })}
                                         className='EditJournalEntry-input'
                                     />
                                 </label>
@@ -156,7 +137,8 @@ class EditJournalEntry extends Component {
 
                         <div className='EditJournalEntry-buttons-panel'>
                             <button onClick={this.handleSaveChanges} className='EditJournalEntry-save-button'>Save changes</button>
-                            <button onClick={this.handleRemoveBook} className='EditJournalEntry-remove-button'>Remove from Journal</button>
+                            {/* This is a helper component for adding books to the Journal */}
+                            <RemoveBookFromJournal bookTitle={this.bookTitle} bookId={this.bookId} classNameProp='EditJournalEntry-remove-button' />
                         </div>
                         <button onClick={() => this.props.history.push(`/journal/${this.bookId}`)} className='EditJournalEntry-cancel-button'>Cancel changes</button>
                     </>
@@ -170,9 +152,6 @@ class EditJournalEntry extends Component {
 const mapStateToProps = state => ({ ...state.journalData })
 
 // Needed for Redux connect()
-const mapDispatchToProps = {
-    setMyBooks,
-    setFilteredBooks
-}
+const mapDispatchToProps = {}
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditJournalEntry))

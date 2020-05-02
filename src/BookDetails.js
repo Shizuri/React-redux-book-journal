@@ -5,10 +5,9 @@ import React, { Component } from 'react'
 import BookCoverNotAvailable from './images/BookCoverNotAvailable.png'
 import { withRouter } from 'react-router-dom'
 import './BookDetails.css'
-import AddBookToJournal from './helperComponents/AddBookToJournal'
 
 import { connect } from 'react-redux'
-import { setMyBooks, setFilteredBooks } from './redux/journalData'
+import AddBookToJournal from './helperComponents/AddBookToJournal'
 
 class BookDetails extends Component {
     constructor(props) {
@@ -135,9 +134,6 @@ class BookDetails extends Component {
 const mapStateToProps = state => ({ ...state })
 
 // Needed for Redux connect()
-const mapDispatchToProps = {
-    setMyBooks,
-    setFilteredBooks
-}
+const mapDispatchToProps = {}
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(BookDetails))

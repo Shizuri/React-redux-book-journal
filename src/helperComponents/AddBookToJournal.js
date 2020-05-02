@@ -1,12 +1,11 @@
 // This is a helper component for adding books to the Journal.
 // It's necessary because the addBookToJournal functionality is needed in more than one component.
 // By using it we do not break the DRY priciple of programming.
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { setMyBooks, setFilteredBooks } from '../redux/journalData'
 
-class AddBookToJournal2 extends Component {
+class AddBookToJournal extends Component {
     addBookToJournal = (bookInput) => {
         const book = {
             bookId: bookInput.id,
@@ -48,4 +47,4 @@ const mapDispatchToProps = {
     setFilteredBooks
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddBookToJournal2)
+export default connect(mapStateToProps, mapDispatchToProps)(AddBookToJournal)

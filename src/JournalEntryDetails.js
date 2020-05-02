@@ -5,7 +5,7 @@ import './JournalEntryDetails.css'
 import Ratings from 'react-ratings-declarative'
 
 import { connect } from 'react-redux'
-import { setMyBooks, setFilteredBooks } from './redux/journalData'
+import RemoveBookFromJournal from './helperComponents/RemoveBookFromJournal'
 
 class JournalEntryDetails extends Component {
     // These values are needed in more than one method including the render method.
@@ -28,24 +28,6 @@ class JournalEntryDetails extends Component {
             notes: '',
             hasEntry: false
         }
-    }
-
-    // Provide a confirmation and page redirection after the book is removed from the Journal
-    handleRemoveBook = () => {
-        if (window.confirm(`Are you sure that you want to remove ${this.bookTitle} from your Journal?`)) {
-            this.removeBookFromJournal(this.bookId)
-            this.props.history.push('/journal')
-        }
-    }
-
-    removeBookFromJournal = bookId => {
-        const updatedMyBooks = this.props.myBooks.filter(book => book.bookId !== bookId)
-        // Update myBooks and filteredBooks after the book has been removed from the Journal
-        this.props.setMyBooks(updatedMyBooks)
-        this.props.setFilteredBooks(updatedMyBooks)
-        // Update the localStorage after the book has been removed from the Journal
-        localStorage.setItem('books', JSON.stringify(updatedMyBooks))
-        localStorage.removeItem(bookId)
     }
 
     componentDidMount() {
@@ -123,7 +105,8 @@ class JournalEntryDetails extends Component {
                         </div>
                         <div className='JournalEntryDetails-buttons-panel'>
                             <Link to={`edit/${this.bookId}`} className='JournalEntryDetails-add-edit-button'>{`${this.state.hasEntry ? 'Edit' : 'Add'} Journal Entry`}</Link>
-                            <button onClick={this.handleRemoveBook} className='JournalEntryDetails-remove-book-button'>Remove from Journal</button>
+                            {/* This is a helper component for adding books to the Journal */}
+                            <RemoveBookFromJournal bookTitle={this.bookTitle} bookId={this.bookId} classNameProp='JournalEntryDetails-remove-book-button' />
                         </div>
                         <button onClick={() => this.props.history.push('/journal')} className='JournalEntryDetails-back-button'>Back</button>
                     </div>
@@ -139,9 +122,6 @@ class JournalEntryDetails extends Component {
 const mapStateToProps = state => ({ ...state.journalData })
 
 // Needed for Redux connect()
-const mapDispatchToProps = {
-    setMyBooks,
-    setFilteredBooks
-}
+const mapDispatchToProps = {}
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(JournalEntryDetails))

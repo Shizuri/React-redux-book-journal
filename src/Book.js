@@ -7,8 +7,6 @@ import './Book.css'
 import useFormatAuthors from './hooks/useFormatAuthors'
 
 import { connect } from 'react-redux'
-import { setMyBooks, setFilteredBooks } from './redux/journalData'
-
 import AddBookToJournal from './helperComponents/AddBookToJournal'
 
 class Book extends Component {
@@ -53,9 +51,6 @@ class Book extends Component {
 const mapStateToProps = state => ({ ...state.journalData })
 
 // Needed for Redux connect()
-const mapDispatchToProps = {
-    setMyBooks,
-    setFilteredBooks
-}
+const mapDispatchToProps = {}
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Book))
